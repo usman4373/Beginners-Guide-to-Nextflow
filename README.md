@@ -2,7 +2,7 @@
 
 ## 📌 What is Nextflow?
 
-**Nextflow** is a **workflow management system** designed to help you run complex data analysis pipelines in a structured, scalable, and reproducible way.
+[**Nextflow**](https://www.nextflow.io/) is a **workflow management system** designed to help you run complex data analysis pipelines in a structured, scalable, and reproducible way.
 
 In bioinformatics, analyses often involve multiple steps such as:
 
