@@ -157,6 +157,53 @@ Resume works correctly only if:
 - You use `-resume` flag
 - Inputs and parameters remain the same
 
+### ⚠️ Important: Parameters, Resume Behavior, and Common Mistakes
+
+### 🔁 1. Same parameters MUST be provided again during resume
+- When restarting a workflow, you must re-run the **exact same command**
+- This includes:
+  - All input files
+  - All parameters (e.g., `--exhaustiveness`, `--qc_threshold`, etc.)
+- Only difference is adding:
+  - `-resume`
+
+👉 Example:
+```bash
+nextflow run docking.nf --ligands ligands.sdf --proteins proteins/ --exhaustiveness 8 -resume
+```
+
+### ❌ 2. If parameters are NOT the same, Nextflow treats it as a NEW run
+- Even small changes (e.g., changing --exhaustiveness 8 → 16) will:
+- Break resume matching
+- Trigger recomputation of affected tasks
+- Nextflow assumes:
+> “This is a different analysis”
+
+### 🔄 3. What “resume” actually depends on
+
+Resume is NOT based on your memory or command history.
+
+It depends on:
+- Input files
+- Parameter values
+- Workflow code version
+- Task execution fingerprint (hash)
+
+👉 If any of these change → tasks are NOT reused
+
+### 💥 4. If you forget parameters and guess incorrectly
+You may accidentally:
+- Re-run everything from scratch ❌
+- Or produce inconsistent results ❌
+- This happens because Nextflow cannot match previous cached tasks
+
+### 🧠 5. Key takeaway
+- `-resume` does NOT mean “continue automatically”
+
+It means:
+
+“Reuse ONLY what matches the same run configuration”
+
 ---
 
 ## 🎯 Final Takeaways
